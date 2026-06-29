@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表格的增删改查</title>
+    <style>
+        body{
+            background-color: #2192a7;
+        }
+        table{
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,td {
+            border: 1px solid #aaa;
+            text-align: center;
+            padding: 8px;
+        }
+
+        th{border: #aaa;}
+        button{
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center">表格的增删改查</h1>
+    <button onclick="addRow()">新增数据</button>
+    <table id="table">
+        <tr>
+            <th>姓名</th>
+            <th>联系方式</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <td>小扬</td>
+            <td>132323144</td>
+            <td>
+                <button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button>
+            </td>
+        </tr>
+    </table>
+
+    <script src="JS/table.js"></script>
+</body>
+</html>
