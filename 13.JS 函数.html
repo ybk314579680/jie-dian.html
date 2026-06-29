@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 函数</title>
+</head>
+<body>
+    <script>
+        function hello() {
+            console.log('Heiio,world');
+            
+        }
+
+        hello();
+
+        function hello_with_return(){
+            return'hello,world!-反回值'    
+        }
+
+        let a = hello_with_return();
+        console.log(a);
+        console.log(hello_with_return());
+        
+        function hello_with_params(name){
+            console.log('hello, '+ name);
+            
+        }
+
+        hello_with_params('小扬');
+
+       //作用域：分全局作用域，和局部作用域。 
+       // 在函数内部声明的变量具有局部作用域。 在函数外声明的变量具有全局作用域
+        
+        let global_var='全局作用域';
+        function local_var_function() {
+            let local_var='局部变量';
+            console.log('函数内打印全局变量：'+ global_var);
+            console.log('函数内打印局部变量：'+ local_var);
+            
+        }
+
+        local_var_function();
+
+        console.log('全局打印全局变量：'+ global_var);
+        console.log('全局打印局部变量：'+ local_var);
+            
+    </script>
+</body>
+
+</html>
