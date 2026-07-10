@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* 关键：让 dark: 基于 <html> 上的 .dark class，从而支持手动切换
+   （而非仅跟随系统 prefers-color-scheme） */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #faf7f0; /* 白天：奶白 */
+  --foreground: #1f2a24; /* 白天：墨绿近黑 */
+}
+
+.dark {
+  --background: #18181b; /* 夜间：主流中性深灰（zinc-900） */
+  --foreground: #e4e4e7; /* 夜间：柔和浅灰白（zinc-200），不刺眼 */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  background-color: var(--background);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* 代码语法高亮（rehype-pretty-code + shiki 双主题，跟随 .dark class） */
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark) !important;
+}
+
+.shiki {
+  overflow-x: auto;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
