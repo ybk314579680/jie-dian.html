@@ -1,8 +1,9 @@
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
-import { site } from "@/data/site";
+import { getSite } from "@/lib/site";
 
 export default function Navbar() {
+  const site = getSite();
   return (
     <header className="border-b border-black/10 dark:border-white/10">
       <nav className="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">

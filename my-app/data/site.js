@@ -3,7 +3,9 @@
 // 组件 / 页面只负责"怎么显示"（结构、样式、排版），从本文件读取数据。
 // 文章正文数据由 content/posts/*.mdx + lib/posts.ts 负责，不在此处。
 
-export const site = {
+// 注意：本文件以 CommonJS 导出（module.exports），便于运行时被 lib/site.ts
+// 每次重新 require 并清除缓存，从而实现"修改即生效、无需重启服务"。
+const site = {
   // 站点名称：导航栏品牌、<title> 默认名、页脚都会用到
   name: "MCTR",
 
@@ -43,9 +45,11 @@ export const site = {
   about: {
     title: "关于",
     paragraphs: [
-      "在这里写一段关于这个博客与作者的介绍。",
+      "这是我的个人博客，我会分享我很认可的知识，观点。我在这里留下我自己的痕迹",
     ],
     contactTitle: "联系方式",
     contacts: [{ label: "邮箱", value: "ybk314579680@qq.com" }],
   },
 };
+
+module.exports = { site };

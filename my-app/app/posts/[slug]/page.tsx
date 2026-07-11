@@ -4,8 +4,12 @@ import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import Image from "next/image";
 import { mdxComponents } from "@/components/mdx";
-import { site } from "@/data/site";
+import { getSite } from "@/lib/site";
+
+// 每次请求都重新渲染，确保修改 data/site.js 或文章后即时生效
+export const dynamic = "force-dynamic";
 
 // 预渲染所有文章路由
 export function generateStaticParams() {
@@ -39,6 +43,7 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const site = getSite();
   const post = getPostBySlug(slug);
   if (!post) notFound();
 
@@ -62,6 +67,19 @@ export default async function PostPage({
           )}
         </div>
       </header>
+
+      {/* 封面大图（frontmatter 中设置 cover 字段才显示） */}
+      {post.cover && (
+        <div className="relative mb-8 aspect-[1200/630] w-full overflow-hidden rounded-lg">
+          <Image
+            src={post.cover}
+            alt={post.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 700px"
+            className="object-cover"
+          />
+        </div>
+      )}
 
       {/* prose 排版：16px 正文、1.8 行高、深色模式自动反色 */}
       <div className="prose prose-neutral max-w-none text-[16px] leading-[1.8] dark:prose-invert prose-pre:bg-transparent prose-p:text-[16px] prose-p:leading-[1.8]">

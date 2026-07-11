@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import ThemeToggle from "@/components/ThemeToggle";
-import { site } from "@/data/site";
+import { getSite } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,13 +16,17 @@ const geistMono = Geist_Mono({
 });
 
 // 站点级 Meta 数据；各页面可用 generateMetadata 覆盖 / 继承模板
-export const metadata: Metadata = {
-  title: {
-    default: site.name,
-    template: `%s · ${site.name}`,
-  },
-  description: site.description,
-};
+// 用 generateMetadata 而非静态 metadata，确保修改 data/site.js 后即时生效
+export async function generateMetadata(): Promise<Metadata> {
+  const site = getSite();
+  return {
+    title: {
+      default: site.name,
+      template: `%s · ${site.name}`,
+    },
+    description: site.description,
+  };
+}
 
 // 首屏防闪烁：在 <head> 内同步读取主题，决定是否加 .dark
 const themeScript = `
@@ -41,6 +45,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const site = getSite();
   return (
     <html
       lang="zh-CN"

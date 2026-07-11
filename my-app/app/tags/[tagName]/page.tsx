@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import PostCard from "@/components/PostCard";
 import { getAllTags, getPostsByTag } from "@/lib/posts";
-import { site } from "@/data/site";
+import { getSite } from "@/lib/site";
+
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return getAllTags().map(({ tag }) => ({ tagName: tag }));
@@ -27,6 +29,7 @@ export default async function TagPage({
   params: Promise<{ tagName: string }>;
 }) {
   const { tagName } = await params;
+  const site = getSite();
   const posts = getPostsByTag(tagName);
 
   if (posts.length === 0) notFound();

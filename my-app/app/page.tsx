@@ -1,8 +1,12 @@
 import PostCard from "@/components/PostCard";
 import { getAllPosts } from "@/lib/posts";
-import { site } from "@/data/site";
+import { getSite } from "@/lib/site";
+
+// 每次请求都重新渲染，确保修改 data/site.js 或文章后即时生效
+export const dynamic = "force-dynamic";
 
 export default function HomePage() {
+  const site = getSite();
   const posts = getAllPosts();
 
   return (

@@ -1,14 +1,20 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getAllTags } from "@/lib/posts";
-import { site } from "@/data/site";
+import { getSite } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: site.tags.title,
-  description: site.description,
-};
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const site = getSite();
+  return {
+    title: site.tags.title,
+    description: site.description,
+  };
+}
 
 export default function TagsPage() {
+  const site = getSite();
   const tags = getAllTags();
   const maxCount = tags.length > 0 ? tags[0].count : 1;
 

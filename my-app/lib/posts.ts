@@ -18,6 +18,18 @@ export interface Post extends PostMeta {
   content: string;
 }
 
+/** 取正文第一段纯文本作为摘要（去掉行内 markdown 符号） */
+function firstParagraph(text: string): string {
+  for (const line of text.split("\n")) {
+    const t = line.trim();
+    if (!t) continue;
+    if (t.startsWith("#") || t.startsWith(">") || t.startsWith("!") || t.startsWith("```"))
+      continue;
+    return t.replace(/[*_`>#]/g, "").slice(0, 80);
+  }
+  return "";
+}
+
 /** 读取单个 MDX 文件，解析 frontmatter 与正文 */
 function readPostFile(fileName: string): Post {
   const slug = fileName.replace(/\.mdx?$/, "");
@@ -32,13 +44,17 @@ function readPostFile(fileName: string): Post {
       ? rawDate.toISOString().slice(0, 10)
       : String(rawDate ?? "");
 
+  // 没有 frontmatter.title 时，取正文第一个 # 标题，再退化为文件名
+  const h1Match = content.match(/^\s*#\s+(.+)$/m);
+  const h1 = h1Match ? h1Match[1].trim() : "";
+
   return {
     slug,
-    title: data.title ?? slug,
+    title: data.title ?? h1 ?? slug,
     date,
     tags: Array.isArray(data.tags) ? data.tags : [],
-    excerpt: data.excerpt ?? "",
-    cover: data.cover,
+    excerpt: data.excerpt ?? firstParagraph(content),
+    cover: data.cover ?? "",
     content,
   };
 }
