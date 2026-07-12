@@ -98,7 +98,10 @@ export function getAllTags(): { tag: string; count: number }[] {
 
 /** 指定标签下的所有文章 */
 export function getPostsByTag(tag: string): Post[] {
-  return getAllPosts().filter((p) => p.tags.includes(tag));
+  // URL 中的中文标签经过 encodeURIComponent 编码，部分 Next 版本不会自动解码 params，
+  // 这里统一 decode 兜底（对已解码/ASCII 值无副作用），并 trim 避免首尾空格不匹配
+  const decoded = decodeURIComponent(tag).trim();
+  return getAllPosts().filter((p) => p.tags.map((t) => t.trim()).includes(decoded));
 }
 
 /** 将 ISO 日期格式化为中文可读形式 */

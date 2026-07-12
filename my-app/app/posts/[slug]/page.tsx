@@ -8,10 +8,7 @@ import Image from "next/image";
 import { mdxComponents } from "@/components/mdx";
 import { getSite } from "@/lib/site";
 
-// 每次请求都重新渲染，确保修改 data/site.js 或文章后即时生效
-export const dynamic = "force-dynamic";
-
-// 预渲染所有文章路由
+// 预渲染所有文章路由（静态导出时据此生成每个文章的静态 HTML）
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
 }

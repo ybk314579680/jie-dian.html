@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { getSite } from "@/lib/site";
 
-export const dynamic = "force-dynamic";
-
 export async function generateMetadata(): Promise<Metadata> {
   const site = getSite();
   return {
