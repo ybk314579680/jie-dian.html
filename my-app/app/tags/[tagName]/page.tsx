@@ -2,11 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import PostCard from "@/components/PostCard";
-import { getAllTags, getPostsByTag } from "@/lib/posts";
+import { getAllTags, getPostsByTag, slugToTag, tagToSlug } from "@/lib/posts";
 import { getSite } from "@/lib/site";
 
 export function generateStaticParams() {
-  return getAllTags().map(({ tag }) => ({ tagName: tag }));
+  return getAllTags().map(({ tag }) => ({ tagName: tagToSlug(tag) }));
 }
 
 export async function generateMetadata({
@@ -15,10 +15,10 @@ export async function generateMetadata({
   params: Promise<{ tagName: string }>;
 }): Promise<Metadata> {
   const { tagName } = await params;
-  const decoded = decodeURIComponent(tagName);
+  const tag = slugToTag(tagName);
   return {
-    title: `标签：${decoded}`,
-    description: `标签「${decoded}」下的所有文章。`,
+    title: `标签：${tag}`,
+    description: `标签「${tag}」下的所有文章。`,
   };
 }
 
@@ -28,9 +28,9 @@ export default async function TagPage({
   params: Promise<{ tagName: string }>;
 }) {
   const { tagName } = await params;
-  const decoded = decodeURIComponent(tagName);
+  const tag = slugToTag(tagName);
   const site = getSite();
-  const posts = getPostsByTag(decoded);
+  const posts = getPostsByTag(tag);
 
   if (posts.length === 0) notFound();
 
@@ -43,7 +43,7 @@ export default async function TagPage({
         ← {site.tags.backHint}
       </Link>
 
-      <h1 className="mb-8 mt-3 text-2xl font-bold">标签：{decoded} 下的文章</h1>
+      <h1 className="mb-8 mt-3 text-2xl font-bold">标签：{tag} 下的文章</h1>
 
       <div className="grid gap-6">
         {posts.map((post) => (

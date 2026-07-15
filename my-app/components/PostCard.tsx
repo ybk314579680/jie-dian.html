@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { PostMeta, formatDate } from "@/lib/posts";
+import { PostMeta, formatDate, tagToSlug } from "@/lib/posts";
 
 export default function PostCard({ post }: { post: PostMeta }) {
   return (
@@ -37,7 +37,7 @@ export default function PostCard({ post }: { post: PostMeta }) {
               {post.tags.map((tag) => (
                 <li key={tag}>
                   <Link
-                    href={`/tags/${encodeURIComponent(tag)}`}
+                    href={`/tags/${tagToSlug(tag)}`}
                     className="rounded bg-black/5 px-2 py-0.5 text-xs transition hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/15"
                   >
                     {tag}

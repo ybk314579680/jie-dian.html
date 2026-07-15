@@ -96,12 +96,25 @@ export function getAllTags(): { tag: string; count: number }[] {
     .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
 }
 
+/** 把任意标签转为稳定、URL 安全的 ASCII slug（支持中文，且静态导出文件名安全） */
+export function tagToSlug(tag: string): string {
+  return Buffer.from(tag, "utf8").toString("base64url");
+}
+
+/** 从 slug 还原标签（与 tagToSlug 互逆） */
+export function slugToTag(slug: string): string {
+  try {
+    return Buffer.from(slug, "base64url").toString("utf8");
+  } catch {
+    return slug;
+  }
+}
+
 /** 指定标签下的所有文章 */
 export function getPostsByTag(tag: string): Post[] {
-  // URL 中的中文标签经过 encodeURIComponent 编码，部分 Next 版本不会自动解码 params，
-  // 这里统一 decode 兜底（对已解码/ASCII 值无副作用），并 trim 避免首尾空格不匹配
-  const decoded = decodeURIComponent(tag).trim();
-  return getAllPosts().filter((p) => p.tags.map((t) => t.trim()).includes(decoded));
+  // tag 已通过 slugToTag 还原为真实标签；这里再 trim 避免首尾空格不匹配
+  const target = tag.trim();
+  return getAllPosts().filter((p) => p.tags.map((t) => t.trim()).includes(target));
 }
 
 /** 将 ISO 日期格式化为中文可读形式 */

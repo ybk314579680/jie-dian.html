@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getAllTags } from "@/lib/posts";
+import { getAllTags, tagToSlug } from "@/lib/posts";
 import { getSite } from "@/lib/site";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -30,7 +30,7 @@ export default function TagsPage() {
             return (
               <Link
                 key={tag}
-                href={`/tags/${encodeURIComponent(tag)}`}
+                href={`/tags/${tagToSlug(tag)}`}
                 className="font-medium text-gray-700 transition hover:text-black dark:text-gray-300 dark:hover:text-white"
                 style={{ fontSize: `${fontSize}rem` }}
               >
