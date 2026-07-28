@@ -62,6 +62,16 @@ export default function RootLayout({
         <footer className="mx-auto w-full max-w-3xl px-4 py-8 text-sm text-gray-400">
           © {new Date().getFullYear()} {site.name} · {site.footer}
         </footer>
+        <div className="mx-auto w-full max-w-3xl px-4 pb-8 text-center text-xs text-gray-400">
+          <a
+            href="https://beian.miit.gov.cn/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-gray-600 hover:underline dark:hover:text-gray-200"
+          >
+            皖ICP备2026023469号
+          </a>
+        </div>
       </body>
     </html>
   );
