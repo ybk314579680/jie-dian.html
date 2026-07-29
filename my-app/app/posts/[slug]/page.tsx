@@ -74,6 +74,7 @@ export default async function PostPage({
             fill
             sizes="(max-width: 768px) 100vw, 700px"
             className="object-cover"
+            unoptimized
           />
         </div>
       )}

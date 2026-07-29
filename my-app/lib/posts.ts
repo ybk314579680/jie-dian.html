@@ -117,6 +117,26 @@ export function getPostsByTag(tag: string): Post[] {
   return getAllPosts().filter((p) => p.tags.map((t) => t.trim()).includes(target));
 }
 
+/** 首页每页文章数（如需调整直接改这里；文章数 ≤ 此值时不分页） */
+export const POSTS_PER_PAGE = 3;
+
+/** 按页码（从 1 开始）分页获取文章，并返回总页数 / 当前页 */
+export function getPaginatedPosts(page: number): {
+  posts: Post[];
+  totalPages: number;
+  currentPage: number;
+} {
+  const all = getAllPosts();
+  const totalPages = Math.max(1, Math.ceil(all.length / POSTS_PER_PAGE));
+  const currentPage = Math.min(Math.max(1, Math.floor(page) || 1), totalPages);
+  const start = (currentPage - 1) * POSTS_PER_PAGE;
+  return {
+    posts: all.slice(start, start + POSTS_PER_PAGE),
+    totalPages,
+    currentPage,
+  };
+}
+
 /** 将 ISO 日期格式化为中文可读形式 */
 export function formatDate(date: string): string {
   if (!date) return "";

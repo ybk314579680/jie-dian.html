@@ -1,10 +1,11 @@
 import PostCard from "@/components/PostCard";
-import { getAllPosts } from "@/lib/posts";
+import Pagination from "@/components/Pagination";
+import { getPaginatedPosts } from "@/lib/posts";
 import { getSite } from "@/lib/site";
 
 export default function HomePage() {
   const site = getSite();
-  const posts = getAllPosts();
+  const { posts, totalPages, currentPage } = getPaginatedPosts(1);
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-10">
@@ -18,6 +19,10 @@ export default function HomePage() {
             <PostCard key={post.slug} post={post} />
           ))}
         </div>
+      )}
+
+      {totalPages > 1 && (
+        <Pagination currentPage={currentPage} totalPages={totalPages} />
       )}
     </main>
   );
