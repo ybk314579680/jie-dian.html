@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { PostMeta, formatDate, tagToSlug } from "@/lib/posts";
 
 export default function PostCard({ post }: { post: PostMeta }) {
@@ -9,13 +8,12 @@ export default function PostCard({ post }: { post: PostMeta }) {
       {post.cover && (
         <Link href={`/posts/${post.slug}`} className="block">
           <div className="relative aspect-[1200/630] w-full">
-            <Image
+            {/* 静态导出无图片优化服务，直接使用原生 img 输出原始 src，避免 /_next/image 403 */}
+            <img
               src={post.cover}
               alt={post.title}
-              fill
-              sizes="(max-width: 768px) 100vw, 700px"
-              className="object-cover"
-              unoptimized
+              className="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
             />
           </div>
         </Link>

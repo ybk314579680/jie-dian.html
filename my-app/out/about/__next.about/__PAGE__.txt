@@ -1,5 +1,0 @@
-1:"$Sreact.fragment"
-2:I[97367,["/_next/static/chunks/2t_vqjcczf3_z.js","/_next/static/chunks/0jqke9h6xywfr.js"],"OutletBoundary"]
-3:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"mx-auto w-full max-w-3xl px-4 py-10","children":["$","div",null,{"className":"prose prose-neutral max-w-none text-[16px] leading-[1.8] dark:prose-invert","children":[["$","h1",null,{"children":"关于"}],[["$","p","0",{"children":"这是我的个人博客，我会分享我很认可的知识，观点。我在这里留下我自己的痕迹"}]],[["$","h2",null,{"children":"联系方式"}],["$","ul",null,{"children":[["$","li","0",{"children":["邮箱","：","ybk314579680@qq.com"]}]]}]]]}]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"QVEJBUzrlmhjMwoQQvDC9"}
-4:null

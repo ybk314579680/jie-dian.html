@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
-import Image from "next/image";
 import { mdxComponents } from "@/components/mdx";
 import { getSite } from "@/lib/site";
 
@@ -68,13 +67,12 @@ export default async function PostPage({
       {/* 封面大图（frontmatter 中设置 cover 字段才显示） */}
       {post.cover && (
         <div className="relative mb-8 aspect-[1200/630] w-full overflow-hidden rounded-lg">
-          <Image
+          {/* 静态导出无图片优化服务，直接使用原生 img 输出原始 src，避免 /_next/image 403 */}
+          <img
             src={post.cover}
             alt={post.title}
-            fill
-            sizes="(max-width: 768px) 100vw, 700px"
-            className="object-cover"
-            unoptimized
+            className="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
           />
         </div>
       )}
