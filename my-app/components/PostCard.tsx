@@ -4,11 +4,9 @@ import { PostMeta, formatDate, tagToSlug } from "@/lib/posts";
 export default function PostCard({ post }: { post: PostMeta }) {
   return (
     <article className="overflow-hidden rounded-lg border border-black/10 transition hover:shadow-md dark:border-white/10">
-      {/* 封面图（frontmatter 中设置 cover 字段才显示） */}
       {post.cover && (
         <Link href={`/posts/${post.slug}`} className="block">
           <div className="relative aspect-[1200/630] w-full">
-            {/* 静态导出无图片优化服务，直接使用原生 img 输出原始 src，避免 /_next/image 403 */}
             <img
               src={post.cover}
               alt={post.title}

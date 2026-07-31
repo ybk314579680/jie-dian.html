@@ -67,7 +67,6 @@ export default async function PostPage({
       {/* 封面大图（frontmatter 中设置 cover 字段才显示） */}
       {post.cover && (
         <div className="relative mb-8 aspect-[1200/630] w-full overflow-hidden rounded-lg">
-          {/* 静态导出无图片优化服务，直接使用原生 img 输出原始 src，避免 /_next/image 403 */}
           <img
             src={post.cover}
             alt={post.title}

@@ -3,7 +3,7 @@ import type { MDXComponents } from "mdx/types";
 
 /**
  * 提供给 MDX 正文使用的自定义组件映射。
- * - img  -> 原生 img（静态导出无图片优化服务，直接输出原始 src，避免 /_next/image 403）
+ * - img  -> 原生 img（静态导出无图片优化服务）
  * - a    -> 站内链接使用 next/link（前端路由），外链新开标签页
  */
 export function mdxComponents(): MDXComponents {
