@@ -30,6 +30,21 @@ function firstParagraph(text: string): string {
   return "";
 }
 
+/** 把各种格式的日期统一规范为 YYYY-MM-DD（月、日补零），保证字符串排序即时间排序 */
+function normalizeDate(rawDate: unknown): string {
+  // YAML 会把未加引号且补零的日期（如 2026-08-17）解析成 JS Date
+  if (rawDate instanceof Date && !Number.isNaN(rawDate.getTime())) {
+    return rawDate.toISOString().slice(0, 10);
+  }
+  // 字符串（含未补零的 2026-8-1、加引号的 "2026-07-12" 等）：提取年月日并补零
+  const s = String(rawDate ?? "").trim();
+  const m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if (m) {
+    return `${m[1]}-${m[2].padStart(2, "0")}-${m[3].padStart(2, "0")}`;
+  }
+  return s;
+}
+
 /** 读取单个 MDX 文件，解析 frontmatter 与正文 */
 function readPostFile(fileName: string): Post {
   const slug = fileName.replace(/\.mdx?$/, "");
@@ -37,12 +52,7 @@ function readPostFile(fileName: string): Post {
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
 
-  // YAML 会把未加引号的日期解析成 JS Date，这里统一规整为 YYYY-MM-DD 字符串
-  const rawDate = data.date;
-  const date =
-    rawDate instanceof Date
-      ? rawDate.toISOString().slice(0, 10)
-      : String(rawDate ?? "");
+  const date = normalizeDate(data.date);
 
   // 没有 frontmatter.title 时，取正文第一个 # 标题，再退化为文件名
   const h1Match = content.match(/^\s*#\s+(.+)$/m);
