@@ -13,6 +13,7 @@ const site = {
   nav: [
     { href: "/", label: "首页" },
     { href: "/tags", label: "标签" },
+    { href: "/personality", label: "人格测试" },
     { href: "/about", label: "关于" },
   ],
 

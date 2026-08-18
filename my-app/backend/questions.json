@@ -1,0 +1,77 @@
+{
+  "version": "IPIP-50",
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "labels": {
+      "1": "非常不同意",
+      "2": "不同意",
+      "3": "中立",
+      "4": "同意",
+      "5": "非常同意"
+    }
+  },
+  "dimensions": {
+    "openness": { "name": "开放性", "key": "O" },
+    "conscientiousness": { "name": "尽责性", "key": "C" },
+    "extraversion": { "name": "外向性", "key": "E" },
+    "agreeableness": { "name": "宜人性", "key": "A" },
+    "neuroticism": { "name": "神经质", "key": "N" }
+  },
+  "questions": [
+    { "id": 1, "dimension": "extraversion", "direction": 1, "text": "我是聚会中的活跃分子" },
+    { "id": 2, "dimension": "extraversion", "direction": 1, "text": "和人们在一起时，我感到轻松自在" },
+    { "id": 3, "dimension": "extraversion", "direction": 1, "text": "我会主动与别人交谈" },
+    { "id": 4, "dimension": "extraversion", "direction": 1, "text": "在聚会中我会和许多不同的人交谈" },
+    { "id": 5, "dimension": "extraversion", "direction": 1, "text": "我不介意成为众人关注的焦点" },
+    { "id": 6, "dimension": "extraversion", "direction": -1, "text": "我平时话不多" },
+    { "id": 7, "dimension": "extraversion", "direction": -1, "text": "我习惯待在人群之外，保持低调" },
+    { "id": 8, "dimension": "extraversion", "direction": -1, "text": "我没什么可说的" },
+    { "id": 9, "dimension": "extraversion", "direction": -1, "text": "我不喜欢引人注目" },
+    { "id": 10, "dimension": "extraversion", "direction": -1, "text": "在陌生人面前我比较安静" },
+
+    { "id": 11, "dimension": "agreeableness", "direction": 1, "text": "我能够体会他人的感受" },
+    { "id": 12, "dimension": "agreeableness", "direction": 1, "text": "我能感受到别人的情绪" },
+    { "id": 13, "dimension": "agreeableness", "direction": 1, "text": "我让人感到轻松自在" },
+    { "id": 14, "dimension": "agreeableness", "direction": 1, "text": "我愿意花时间帮助别人" },
+    { "id": 15, "dimension": "agreeableness", "direction": 1, "text": "我对别人的生活感兴趣" },
+    { "id": 16, "dimension": "agreeableness", "direction": -1, "text": "我对他人其实不太感兴趣" },
+    { "id": 17, "dimension": "agreeableness", "direction": -1, "text": "我有时会冒犯别人" },
+    { "id": 18, "dimension": "agreeableness", "direction": -1, "text": "我对别人的问题不感兴趣" },
+    { "id": 19, "dimension": "agreeableness", "direction": -1, "text": "我不太关心别人" },
+    { "id": 20, "dimension": "agreeableness", "direction": -1, "text": "别人很难真正了解我" },
+
+    { "id": 21, "dimension": "conscientiousness", "direction": 1, "text": "我总是做好准备" },
+    { "id": 22, "dimension": "conscientiousness", "direction": 1, "text": "我很注重细节" },
+    { "id": 23, "dimension": "conscientiousness", "direction": 1, "text": "我做事按计划、守秩序" },
+    { "id": 24, "dimension": "conscientiousness", "direction": 1, "text": "我会把计划贯彻到底" },
+    { "id": 25, "dimension": "conscientiousness", "direction": 1, "text": "我能把事情坚持做完" },
+    { "id": 26, "dimension": "conscientiousness", "direction": -1, "text": "我常常把东西随手乱放" },
+    { "id": 27, "dimension": "conscientiousness", "direction": -1, "text": "我有时会逃避自己该做的任务" },
+    { "id": 28, "dimension": "conscientiousness", "direction": -1, "text": "我做事有时马虎，会把事情搞乱" },
+    { "id": 29, "dimension": "conscientiousness", "direction": -1, "text": "我常常拖延，忽视自己的职责" },
+    { "id": 30, "dimension": "conscientiousness", "direction": -1, "text": "我经常忘记把东西放回原位" },
+
+    { "id": 31, "dimension": "neuroticism", "direction": 1, "text": "我很容易感到压力" },
+    { "id": 32, "dimension": "neuroticism", "direction": 1, "text": "我很容易心烦意乱" },
+    { "id": 33, "dimension": "neuroticism", "direction": 1, "text": "我的情绪经常起伏不定" },
+    { "id": 34, "dimension": "neuroticism", "direction": 1, "text": "我常常为各种事情担忧" },
+    { "id": 35, "dimension": "neuroticism", "direction": 1, "text": "我很容易被激怒" },
+    { "id": 36, "dimension": "neuroticism", "direction": -1, "text": "我大多数时候都很放松" },
+    { "id": 37, "dimension": "neuroticism", "direction": -1, "text": "我很少感到沮丧" },
+    { "id": 38, "dimension": "neuroticism", "direction": -1, "text": "我很少生气发火" },
+    { "id": 39, "dimension": "neuroticism", "direction": -1, "text": "我不容易被事情困扰" },
+    { "id": 40, "dimension": "neuroticism", "direction": -1, "text": "我很少感到紧张" },
+
+    { "id": 41, "dimension": "openness", "direction": 1, "text": "我的词汇量很丰富" },
+    { "id": 42, "dimension": "openness", "direction": 1, "text": "我有丰富的想象力" },
+    { "id": 43, "dimension": "openness", "direction": 1, "text": "我常有绝妙的想法" },
+    { "id": 44, "dimension": "openness", "direction": 1, "text": "我理解新事物很快" },
+    { "id": 45, "dimension": "openness", "direction": 1, "text": "我会花时间思考、反思" },
+    { "id": 46, "dimension": "openness", "direction": -1, "text": "我对抽象的概念不感兴趣" },
+    { "id": 47, "dimension": "openness", "direction": -1, "text": "我的想象力不算丰富" },
+    { "id": 48, "dimension": "openness", "direction": -1, "text": "我理解抽象概念有困难" },
+    { "id": 49, "dimension": "openness", "direction": -1, "text": "我对理论性的讨论不感兴趣" },
+    { "id": 50, "dimension": "openness", "direction": -1, "text": "我不常使用复杂的词汇" }
+  ]
+}
