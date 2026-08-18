@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_PERSONALITY_API || "http://localhost:8000";
+// 后端地址已硬编码为线上地址，不依赖环境变量
+const API_BASE = "https://mocaituoran.cn";
 const PAGE_SIZE = 5;
 const GOLD = "#d4af37";
 
