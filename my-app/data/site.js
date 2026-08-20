@@ -46,7 +46,7 @@ const site = {
   about: {
     title: "关于",
     paragraphs: [
-      "这是我的个人博客，我会分享我很认可的知识，观点。我在这里留下我自己的痕迹",
+      "这是我的个人博客，我会分享我很认可的知识，观点，我在这里留下我自己的痕迹。",
     ],
     contactTitle: "联系方式",
     contacts: [{ label: "邮箱", value: "ybk314579680@qq.com" }],
