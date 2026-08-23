@@ -29,16 +29,26 @@ if (!fs.existsSync(OUT)) {
 }
 
 /**
- * 判断一个目录是否是纯 RSC 数据目录（没有 index.html 的目录就是数据目录）
+ * 递归判断目录内是否包含 .html 文件。
+ * 关键：out/tags/ 这类目录既是 out/tags.html（总览页）的目标目录，
+ * 又装着 out/tags/xxx.html（标签详情页）。如果只看目录里有没有 index.html
+ * 就贸然 rmSync 删除，会把所有标签详情页一起删掉 → 标签页 404。
+ * 所以删除前必须确认目录里（含子目录）没有任何 .html 文件。
  */
-function isDataDir(dirPath) {
+function containsHtml(dirPath) {
   try {
-    if (!fs.statSync(dirPath).isDirectory()) return false;
-    const entries = fs.readdirSync(dirPath);
-    return !entries.includes("index.html");
+    for (const entry of fs.readdirSync(dirPath, { withFileTypes: true })) {
+      if (entry.isDirectory()) {
+        if (containsHtml(path.join(dirPath, entry.name))) return true;
+      } else if (entry.name.endsWith(".html")) {
+        return true;
+      }
+    }
   } catch {
-    return false;
+    // 目录读不了就保守返回 true，不删除
+    return true;
   }
+  return false;
 }
 
 // 1. 扫描所有 .html 文件，收集需要处理的映射
@@ -73,8 +83,8 @@ for (const htmlPath of htmlFiles) {
   if (processed.has(targetDir)) continue;
   processed.add(targetDir);
 
-  // 如果存在同名数据目录，先删掉
-  if (fs.existsSync(targetDir) && isDataDir(targetDir)) {
+  // 只有当目录内不含任何 .html 时，才可安全删除（它是纯数据目录）
+  if (fs.existsSync(targetDir) && !containsHtml(targetDir)) {
     fs.rmSync(targetDir, { recursive: true, force: true });
   }
 

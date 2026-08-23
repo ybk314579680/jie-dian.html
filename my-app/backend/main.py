@@ -34,9 +34,54 @@ app.add_middleware(
 
 # ---------- 数据加载 ----------
 
+def _validate_bank(bank: dict) -> None:
+    """校验题库结构，发现问题给出明确错误，避免后续 KeyError / 除零崩溃。"""
+    if not isinstance(bank, dict):
+        raise HTTPException(500, "questions.json 顶层必须是 JSON 对象")
+    if "questions" not in bank or not isinstance(bank["questions"], list):
+        raise HTTPException(500, "questions.json 缺少 questions 数组")
+    if "dimensions" not in bank or not isinstance(bank["dimensions"], dict):
+        raise HTTPException(500, "questions.json 缺少 dimensions 对象")
+
+    dims = bank["dimensions"]
+    seen_ids = set()
+    for q in bank["questions"]:
+        if not isinstance(q, dict):
+            raise HTTPException(500, "questions 数组中存在非对象元素")
+        for field in ("id", "text", "dimension", "direction"):
+            if field not in q:
+                raise HTTPException(500, f"题目 {q.get('id', '?')} 缺少字段 {field}")
+        qid = q["id"]
+        if qid in seen_ids:
+            raise HTTPException(500, f"题目 id 重复：{qid}")
+        seen_ids.add(qid)
+        if q["dimension"] not in dims:
+            raise HTTPException(
+                500, f"题目 {qid} 的维度 {q['dimension']!r} 不在 dimensions 定义中"
+            )
+        if q["direction"] not in (1, -1):
+            raise HTTPException(500, f"题目 {qid} 的 direction 必须是 1 或 -1")
+
+    for key, meta in dims.items():
+        if not isinstance(meta, dict) or "name" not in meta or "key" not in meta:
+            raise HTTPException(500, f"维度 {key!r} 缺少 name / key 字段")
+
+
 def _load_bank() -> dict:
-    with open(QUESTIONS_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+    """加载题库，带健壮的格式校验。改坏 questions.json 时给出可定位的错误，而不是 500 崩溃。"""
+    try:
+        with open(QUESTIONS_FILE, "r", encoding="utf-8") as f:
+            bank = json.load(f)
+    except FileNotFoundError:
+        raise HTTPException(500, f"题库文件不存在：{QUESTIONS_FILE}")
+    except json.JSONDecodeError as e:
+        raise HTTPException(
+            500,
+            f"questions.json 格式错误（第 {e.lineno} 行第 {e.colno} 列）：{e.msg}。"
+            "请检查逗号、引号、括号是否成对。",
+        )
+    _validate_bank(bank)
+    return bank
 
 
 # ---------- 模型 ----------
@@ -109,6 +154,8 @@ def score(req: ScoreRequest):
     scores = []
     for key, meta in dims.items():
         count = sum(1 for q in bank["questions"] if q["dimension"] == key)
+        if count == 0:
+            raise HTTPException(500, f"维度 {key} 没有任何题目，无法计分")
         low = count * scale_min
         high = count * scale_max
         score = round((raw[key] - low) / (high - low) * 100)
