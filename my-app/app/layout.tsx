@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import ThemeToggle from "@/components/ThemeToggle";
 import { getSite } from "@/lib/site";
 
 const geistSans = Geist({
@@ -28,12 +27,17 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// 首屏防闪烁：在 <head> 内同步读取主题，决定是否加 .dark
+// 首屏防闪烁：在 <head> 内同步读取主题，决定加 .dark（夜间）或 .theme-green（护眼绿）
+// 未设置过时跟随系统偏好，仅在系统为深色时加 .dark
 const themeScript = `
 (function () {
   try {
     var t = localStorage.getItem('theme');
-    if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (t === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else if (t === 'green') {
+      document.documentElement.classList.add('theme-green');
+    } else if (!t && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       document.documentElement.classList.add('dark');
     }
   } catch (e) {}

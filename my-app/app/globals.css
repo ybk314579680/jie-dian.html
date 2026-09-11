@@ -15,6 +15,13 @@
   --foreground: #e4e4e7; /* 夜间：柔和浅灰白（zinc-200），不刺眼 */
 }
 
+/* 护眼豆沙绿：独立浅色主题，刻意不含 .dark，
+   避免误触发全站的 dark: 变体（代码高亮也会自动回落浅色主题） */
+.theme-green {
+  --background: #c7edcc; /* 护眼豆沙绿 */
+  --foreground: #1f2a24; /* 沿用浅色主题的墨绿近黑，保证对比度 */
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

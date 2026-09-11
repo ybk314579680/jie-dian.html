@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ThemeToggle from "@/components/ThemeToggle";
+import ThemeMenu from "@/components/ThemeMenu";
 import { getSite } from "@/lib/site";
 
 export default function Navbar() {
@@ -23,8 +23,8 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          {/* 日间 / 夜间切换按钮（客户端组件） */}
-          <ThemeToggle />
+          {/* 背景配色选择菜单（客户端组件） */}
+          <ThemeMenu />
         </div>
       </nav>
     </header>
